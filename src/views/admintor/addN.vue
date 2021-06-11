@@ -6,14 +6,15 @@
           <span><slot>物品单</slot></span>
         </div>
       </template>
-      <table :data="dataitems">
-        <template>
-          <table-item-column
-            label="{itemsName[scope.$index]}"
-            prop="{itemsName[scope.$index]}"
-          ></table-item-column>
+      <el-table :data="dataitems">
+        <template v-for="(item, index) in dataitems" :key="index">
+          <el-table-column
+            :label="this.itemsName[index]"
+            :prop="this.itemsName[index]"
+          >
+          </el-table-column>
         </template>
-      </table>
+      </el-table>
       <el-button @click="tip(scope)">添加到采购单</el-button>
     </el-card>
   </div>
@@ -21,10 +22,9 @@
 
 <script>
 export default {
-  props: ["dataItems"],
+  props: [ "dataItems"],
   created() {
     console.log(this.dataitems[0]["goodsname"]);
-
     for (let i in this.dataitems[0]) {
       this.itemsName.push(i);
     }
@@ -34,12 +34,16 @@ export default {
     return {
       itemsName: [],
       dataitems: this.$props.dataItems,
+     
     };
   },
   methods: {
     tip(scope) {
       alert("物品新增成功");
       console.log(scope.$index);
+    },
+    handleEdit(index, row) {
+      console.log(index, row);
     },
   },
 };
