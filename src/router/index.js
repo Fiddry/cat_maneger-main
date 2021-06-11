@@ -8,6 +8,15 @@ const routes = [
     component: Home,
     children: [
       {
+        path: "",
+        name: "",
+        meta: {
+          title: "首页",
+        },
+        component:()=>
+        import("../views/default/index.vue")
+      },
+      {
         path: "/costom",
         name: "costom",
         meta: {
