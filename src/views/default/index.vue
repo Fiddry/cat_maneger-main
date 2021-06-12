@@ -1,17 +1,14 @@
 <template>
-  <div>
-     <v-chart></v-chart>
-  </div>
+  <div></div>
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import vChart from '../charts/chartexmp.vue'
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
+.schart {
+  width: 100%;
+  height: 300px;
+}
 </style>
