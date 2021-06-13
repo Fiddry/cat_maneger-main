@@ -67,7 +67,7 @@ export default {
     delet(row) {
       this.$confirm("确认顾客离店？")
         .then(() => {
-          this.tableData.pop(row.$index);
+          this.costom.pop(row.$index);
         })
         .catch(() => {});
     },

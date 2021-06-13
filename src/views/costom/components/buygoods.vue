@@ -15,6 +15,7 @@
     <el-button @click="reset">重置</el-button>
     <div style="text-align:center"><span>已买物品</span></div>
     <data-table :tableData="boughtGoods"></data-table>
+    
   </el-drawer>
 </template>
 
@@ -31,7 +32,11 @@ export default {
       multipleSelection: [],
     };
   },
-  computed: {},
+  computed: {
+    boughtGoods() {
+      return this.$store.state.boughtGoods;
+    },
+  },
   methods: {
     changeBuyGoods(val) {
       this.multipleSelection = val;
@@ -50,7 +55,7 @@ export default {
       this.$confirm("确认购买？")
         .then(() => {
           this.multipleSelection.forEach((item) => {
-            this.$store.state.boughtItems.push(item);
+            this.$store.state.boughtGoods.push(item);
           });
           this.$emit("changedrawer");
         })

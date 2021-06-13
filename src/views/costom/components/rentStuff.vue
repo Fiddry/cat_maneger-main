@@ -14,7 +14,8 @@
     <el-button @click="confirm">确认</el-button>
     <el-button @click="reset">重置</el-button>
     <div style="text-align:center"><span>已租物品</span></div>
-    <data-table :tableData="rentedStuff"></data-table>
+    <data-table ref="dataRent" :tableData="rentedStuff"></data-table>
+    <el-button @click="resetRent">归还物品</el-button>
   </el-drawer>
 </template>
 
@@ -60,6 +61,11 @@ export default {
     reset() {
       this.$refs.dataTable.reset();
       this.multipleSelection = [];
+    },
+    resetRent() {
+     this.$store.state.rentedStuff.forEach(item => {
+       this.$store.state.rentedStuff.pop(item)
+     });
     },
   },
 };
