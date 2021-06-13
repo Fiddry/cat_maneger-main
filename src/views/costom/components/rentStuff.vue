@@ -13,6 +13,8 @@
     ></data-table>
     <el-button @click="confirm">确认</el-button>
     <el-button @click="reset">重置</el-button>
+    <div style="text-align:center"><span>已租物品</span></div>
+    <data-table :tableData="rentedStuff"></data-table>
   </el-drawer>
 </template>
 
@@ -23,24 +25,14 @@ export default {
   components: {
     dataTable,
   },
-
-  // setup() {
-  //   updated(() => {});
-  // },
-
   data() {
     return {
-      stuffItems: [
-        {
-          物品名称: "逗猫激光笔",
-          租金: 20,
-          剩余数量: 2,
-        },
-      ],
+      stuffItems: this.$store.state.stuffItems,
+      rentedStuff: this.$store.state.rentedStuff,
       multipleSelection: [],
     };
   },
-
+  computed: {},
   methods: {
     changestuffItems(val) {
       this.multipleSelection = val;
@@ -56,8 +48,11 @@ export default {
     },
 
     confirm() {
-      this.$confirm("确认关闭？")
+      this.$confirm("确认所租物品并关闭？")
         .then(() => {
+          this.multipleSelection.forEach((item) => {
+            this.$store.state.rentedStuff.push(item);
+          });
           this.$emit("changedrawer");
         })
         .catch(() => {});

@@ -1,21 +1,21 @@
 <template>
-  <div>
-    <el-drawer
-      title="商品"
-      v-model="this.$props.drawer"
-      :with-header="false"
-      :before-close="handleClose"
-      destroy-on-close
-    >
-      <data-table
-        ref="dataTable"
-        @selectedItems="changeBuyGoods"
-        :tableData="goodsItems"
-      ></data-table>
-      <el-button @click="confirm">确认</el-button>
-      <el-button @click="reset">重置</el-button>
-    </el-drawer>
-  </div>
+  <el-drawer
+    title="商品"
+    v-model="this.$props.drawer"
+    :with-header="false"
+    :before-close="handleClose"
+    destroy-on-close
+  >
+    <data-table
+      ref="dataTable"
+      @selectedItems="changeBuyGoods"
+      :tableData="goodsItems"
+    ></data-table>
+    <el-button @click="confirm">确认</el-button>
+    <el-button @click="reset">重置</el-button>
+    <div style="text-align:center"><span>已买物品</span></div>
+    <data-table :tableData="boughtGoods"></data-table>
+  </el-drawer>
 </template>
 
 <script>
@@ -25,33 +25,19 @@ export default {
   components: {
     dataTable,
   },
-
-  // setup() {
-  //   updated(() => {});
-  // },
-
   data() {
     return {
-      goodsItems: [
-        {
-          goodsname: "旺仔小馒头",
-          price: 2,
-          totolMoney: 0,
-          numbers: 2,
-        },
-      ],
+      goodsItems: this.$store.state.goodsItems,
+      boughtGoods: this.$store.state.boughtGoods,
       multipleSelection: [],
     };
   },
-
+  computed: {},
   methods: {
     changeBuyGoods(val) {
       this.multipleSelection = val;
     },
-    compute(row) {
-      row.totolMoney = row.price * row.numbers;
-      return row.totolMoney;
-    },
+
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then(() => {
@@ -62,8 +48,11 @@ export default {
     },
 
     confirm() {
-      this.$confirm("确认关闭？")
+      this.$confirm("确认购买？")
         .then(() => {
+          this.multipleSelection.forEach((item) => {
+            this.$store.state.boughtItems.push(item);
+          });
           this.$emit("changedrawer");
         })
         .catch(() => {});

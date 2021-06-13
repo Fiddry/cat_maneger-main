@@ -4,48 +4,46 @@
     v-model="this.$props.Visible"
     @close="changeVisible"
   >
-    <div>
-      <el-table :data="tableData">
-        <el-table-column label="顾客姓名" property="name"></el-table-column>
-        <el-table-column label="电话" property="telephone"></el-table-column>
-        <el-table-column label="性别" property="gender"></el-table-column>
-        <el-table-column label="预约时间" property="time"></el-table-column>
-        <el-table-column label="定金" property="money"></el-table-column>
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-button @click="come(scope.row)">到店</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-    </div></el-dialog
-  >
+    <data-table
+      :tableData="foreCostom"
+      @selectedItems="changeComedCostom"
+    ></data-table>
+    <el-button @click="come">到店</el-button>
+  </el-dialog>
 </template>
 
 <script>
+import dataTable from "../../../components/table.vue";
 export default {
   props: ["Visible"],
 
+  components: {
+    dataTable,
+  },
   data() {
     return {
-      tableData: [
-        {
-          name: "1",
-          telephone: "1",
-          gender: "1",
-          time: "1",
-          money: "1",
-        },
-      ],
+      multipleSelection: [],
     };
+  },
+  computed: {
+    foreCostom() {
+      return this.$store.state.foreCostom;
+    },
   },
   methods: {
     changeVisible() {
       this.$emit("changeVisible");
     },
-    come(row) {
-      console.log(row);
-      this.tableData.pop(row);
-      this.$emit("comeCostom", row);
+    changeComedCostom(val) {
+      this.multipleSelection = val;
+      console.log(val);
+    },
+    come() {
+      this.$emit("comeCostom", this.multipleSelection);
+      this.multipleSelection.forEach((item) => {
+        this.$store.state.foreCostom.pop(item);
+      });
+      this.multipleSelection = [];
     },
   },
 };
