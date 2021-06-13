@@ -8,6 +8,9 @@
     <template v-for="(name, index) in this.itemNames" :key="index">
       <el-table-column :label="name" :prop="name"></el-table-column>
     </template>
+    <el-table-column label="数量">
+      <el-input-number size="mini" v-model="num"></el-input-number>
+    </el-table-column>
   </el-table>
 </template>
 
@@ -33,6 +36,7 @@ export default {
       dataItems: this.$props.tableData,
       itemNames: [],
       multipleSelection: [],
+      num: 0,
     };
   },
   watch: {

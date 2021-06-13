@@ -1,5 +1,11 @@
 <template>
   <div>
+    <el-button @click="this.openOrder = true">打开待采购单</el-button>
+    <purchase-order
+      v-if="openOrder"
+      :orderData="SelectedItems"
+      @close="closeOrder"
+    ></purchase-order>
     <el-row>
       <el-col :span="6">
         <el-card>
@@ -10,9 +16,8 @@
           </template>
           <data-table
             @selectedItems="changeSelectGoods"
-            :tableData="goodsitems"
+            :tableData="goodsItems"
           ></data-table>
-          <el-button @click="submitChangeGoods">添加到采购单</el-button>
         </el-card>
       </el-col>
       <el-col :offset="2" :span="6">
@@ -24,9 +29,8 @@
           </template>
           <data-table
             @selectedItems="changeSelectFoods"
-            :tableData="foodsitems"
+            :tableData="catFoodsItems"
           ></data-table>
-          <el-button @click="submitChangeFoods">添加到采购单</el-button>
         </el-card>
       </el-col>
     </el-row>
@@ -35,35 +39,38 @@
 
 <script>
 import dataTable from "../../components/table.vue";
+import purchaseOrder from "./components/Purchase-order.vue";
 export default {
   components: {
     dataTable,
+    purchaseOrder,
   },
   data() {
     return {
-      goodsitems: [
-        { 商品名称: "旺仔小馒头", 单价: 2, 剩余数量: 2 },
-        { 商品名称: "可口可乐", 单价: 3, 剩余数量: 130 },
-      ],
+      openOrder: false,
+      goodsItems: this.$store.state.goodsItems,
+      catFoodsItems: this.$store.state.catFoodsItems,
       selectedGoods: [],
-      foodsitems: [
-        {
-          名称: "小鱼干",
-          进价: 2,
-          剩余数量: 20,
-        },
-        {
-          名称: "猫粮",
-          进价: 20,
-          剩余数量: 20,
-        },
-      ],
+      selectCatFoods: [],
     };
   },
-  watch: {
-    selectedGoods(val) {
-      console.log(val);
+  computed: {
+    SelectedItems() {
+      let items = [];
+      this.selectedGoods.forEach((item) => {
+        items.push(item);
+      });
+      this.selectCatFoods.forEach((item) => {
+        items.push(item);
+      });
+      console.log(this.items);
+      return items;
     },
+  },
+  watch: {
+    // SelectedItems(val) {
+    //   console.log(val);
+    // },
   },
   methods: {
     tip() {
@@ -73,14 +80,11 @@ export default {
     changeSelectGoods(val) {
       this.selectedGoods = val;
     },
-    submitChangeGoods() {
-      console.log(this.selectedGoods);
-    },
     changeSelectFoods(val) {
-      this.selectedGoods = val;
+      this.selectCatFoods = val;
     },
-    submitChangeFoods() {
-      console.log(this.selectedGoods);
+    closeOrder() {
+      this.openOrder = false;
     },
   },
 };

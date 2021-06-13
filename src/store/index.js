@@ -29,10 +29,23 @@ export default createStore({
         money: "2",
       },
     ],
+
     Items: ["物品名称", "单价", "剩余数量"],
+    catFoodsItems: [
+      {
+        名称: "小鱼干",
+        进价: 2,
+        剩余数量: 20,
+      },
+      {
+        名称: "猫粮",
+        进价: 20,
+        剩余数量: 20,
+      },
+    ],
     goodsItems: [
       {
-        商品名称: "旺仔小馒头",
+        名称: "旺仔小馒头",
         单价: 2,
         剩余数量: 2,
       },
@@ -40,7 +53,7 @@ export default createStore({
     boughtGoods: [],
     stuffItems: [
       {
-        物品名称: "逗猫激光笔",
+        名称: "逗猫激光笔",
         租金: 20,
         剩余数量: 2,
       },
