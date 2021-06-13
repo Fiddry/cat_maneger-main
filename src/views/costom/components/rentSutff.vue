@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <el-drawer
-      title="商品"
-      v-model="this.$props.drawer"
-      :with-header="false"
-      :before-close="handleClose"
-      destroy-on-close
-    >
-      <data-table
-        ref="dataTable"
-        @selectedItems="changeBuyGoods"
-        :tableData="goodsItems"
-      ></data-table>
-      <el-button @click="confirm">确认</el-button>
-      <el-button @click="reset">重置</el-button>
-    </el-drawer>
-  </div>
+  <el-drawer
+    title="商品"
+    v-model="this.$props.drawer"
+    :with-header="false"
+    :before-close="handleClose"
+    destroy-on-close
+  >
+    <data-table
+      ref="dataTable"
+      @selectedItems="changestuffItems"
+      :tableData="stuffItems"
+    ></data-table>
+    <el-button @click="confirm">确认</el-button>
+    <el-button @click="reset">重置</el-button>
+  </el-drawer>
 </template>
 
 <script>
@@ -32,12 +30,11 @@ export default {
 
   data() {
     return {
-      goodsItems: [
+      stuffItems: [
         {
-          goodsname: "旺仔小馒头",
-          price: 2,
-          totolMoney: 0,
-          numbers: 2,
+          物品名称: "逗猫激光笔",
+          租金: 20,
+          剩余数量: 2,
         },
       ],
       multipleSelection: [],
@@ -45,13 +42,10 @@ export default {
   },
 
   methods: {
-    changeBuyGoods(val) {
+    changestuffItems(val) {
       this.multipleSelection = val;
     },
-    compute(row) {
-      row.totolMoney = row.price * row.numbers;
-      return row.totolMoney;
-    },
+
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then(() => {

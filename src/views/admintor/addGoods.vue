@@ -7,12 +7,8 @@
         </div>
       </template>
       <el-table :data="dataitems">
-        <template v-for="(item, index) in dataitems" :key="index">
-          <el-table-column
-            :label="this.itemsName[index]"
-            :prop="this.itemsName[index]"
-          >
-          </el-table-column>
+        <template v-for="(item, index) in itemsName" :key="index">
+          <el-table-column :label="item" :prop="item"> </el-table-column>
         </template>
       </el-table>
       <el-button @click="tip(scope)">添加到采购单</el-button>
@@ -22,19 +18,16 @@
 
 <script>
 export default {
-  props: [ "dataItems"],
+  props: ["dataItems"],
   created() {
-    console.log(this.dataitems[0]["goodsname"]);
     for (let i in this.dataitems[0]) {
       this.itemsName.push(i);
     }
-    console.log(this.itemsName);
   },
   data() {
     return {
       itemsName: [],
       dataitems: this.$props.dataItems,
-     
     };
   },
   methods: {

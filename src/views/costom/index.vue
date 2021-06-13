@@ -1,11 +1,11 @@
 <template>
   <div>
-    <el-button @click="this.Visible = true">预约顾客</el-button>
+    <!-- <el-button @click="this.Visible = true">预约顾客</el-button>
     <forehead
-      @thereCostom="comeCostom"
+      @comeCostom="comeCostom"
       @changeVisible="changeVisible"
       :Visible="Visible"
-    ></forehead>
+    ></forehead> -->
     <el-table :data="tableData">
       <el-table-column label="顾客名称" prop="name"></el-table-column>
       <el-table-column label="性别" prop="gender"></el-table-column>
@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import forehead from "./components/forehead.vue";
+// import forehead from "./components/forehead.vue";
 import buygoods from "./components/buygoods.vue";
 import rentStuf from "./components/rentStuff.vue";
 export default {
   components: {
-    forehead,
+    // forehead,
     buygoods,
     rentStuf
   },

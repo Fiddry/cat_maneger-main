@@ -2,8 +2,6 @@
   <el-dialog
     title="预约顾客"
     v-model="this.$props.Visible"
-    close-on-click-modal="false"
-    close-on-press-escape="false"
     @close="changeVisible"
   >
     <div>
@@ -15,7 +13,7 @@
         <el-table-column label="定金" property="money"></el-table-column>
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button @click="there(scope.row)">到店</el-button>
+            <el-button @click="come(scope.row)">到店</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -25,7 +23,7 @@
 
 <script>
 export default {
-  props: ["Visible" ],
+  props: ["Visible"],
 
   data() {
     return {
@@ -44,10 +42,10 @@ export default {
     changeVisible() {
       this.$emit("changeVisible");
     },
-    there(row) {
+    come(row) {
       console.log(row);
       this.tableData.pop(row);
-      this.$emit("comeCostom",row)
+      this.$emit("comeCostom", row);
     },
   },
 };
