@@ -28,7 +28,6 @@ export default {
   data() {
     return {
       goodsItems: this.$store.state.goodsItems,
-      boughtGoods: this.$store.state.boughtGoods,
       multipleSelection: [],
     };
   },
