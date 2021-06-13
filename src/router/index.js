@@ -13,8 +13,7 @@ const routes = [
         meta: {
           title: "首页",
         },
-        component:()=>
-        import("../views/default/index.vue")
+        component: () => import("../views/default/index.vue"),
       },
       {
         path: "/costom",
@@ -38,6 +37,30 @@ const routes = [
           import(
             /* webpackChunkName: "admin" */
             "../views/admintor/index.vue"
+          ),
+      },
+      {
+        path: "/cat",
+        name: "cat",
+        meta: {
+          title: "猫咪",
+        },
+        component: () =>
+          import(
+            /* webpackChunkName: "cat" */
+            "../views/cat/index.vue"
+          ),
+      },
+      {
+        path: "/worker",
+        name: "worker",
+        meta: {
+          title: "员工",
+        },
+        component: () =>
+          import(
+            /* webpackChunkName: "workers" */
+            "../views/workers/index.vue"
           ),
       },
       {

@@ -67,6 +67,16 @@ export default {
           index: "admin",
           title: "库存管理",
         },
+        {
+          icon: "el-icon-lx-profile",
+          index: "cat",
+          title: "猫咪",
+        },
+        {
+          icon: "el-icon-lx-profile",
+          index: "worker",
+          title: "员工",
+        },
       ],
     };
   },

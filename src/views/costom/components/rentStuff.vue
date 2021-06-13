@@ -63,7 +63,7 @@ export default {
       this.multipleSelection = [];
     },
     resetRent() {
-     this.$store.state.rentedStuff.forEach(item => {
+     this.rentedStuff.forEach(item => {
        this.$store.state.rentedStuff.pop(item)
      });
     },

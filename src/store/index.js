@@ -60,6 +60,15 @@ export default createStore({
     ],
     rentedStuff: [],
     orderData: [],
+
+    cat: [
+      { 名字: "西西", 年龄: 5, 健康状态: "健康" },
+      { 名字: "哈哈", 年龄: 6, 健康状态: "健康" },
+    ],
+    workers: [
+      { 名字: "didi", 年龄: 21, 缺勤: 0, 工资: 5000 },
+      { 名字: "gege", 年龄: 20, 缺勤: 3, 工资: 5000 },
+    ],
   },
   mutations: {
     delTagsItem(state, data) {
