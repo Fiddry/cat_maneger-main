@@ -9,17 +9,21 @@
     </div>
     <div class="container">
       <el-tabs v-model="message">
-        <el-tab-pane :label="`预约信息(${unread.length})`" name="first">
-          <el-table :data="unread" :show-header="false" style="width: 100%">
+        <el-tab-pane :label="`预约信息(${unComfCostom.length})`" name="first">
+          <el-table
+            :data="unComfCostom"
+            :show-header="false"
+            style="width: 100%"
+          >
             <el-table-column>
               <template #default="scope">
-                <span class="message-title">{{ scope.row.title }}</span>
+                <span class="message-title">{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="date" width="180"></el-table-column>
+            <el-table-column prop="time" width="180"></el-table-column>
             <el-table-column width="120">
               <template #default="scope">
-                <el-button size="small" @click="handleRead(scope.$index)"
+                <el-button size="small" @click="handleReady(scope.row)"
                   >确认</el-button
                 >
               </template>
@@ -41,25 +45,26 @@ export default {
     return {
       message: "first",
       showHeader: false,
-      unread: [
+      unComfCostom: [
         {
-          date: "2018-04-19 20:00:00",
-          title: "陈先生",
+          time: "2018-04-19 20:00:00",
+          name: "陈先生",
+          telephone: "1",
+          gender: "1",
+          money: "1",
         },
-       
       ],
     };
   },
   methods: {
-    handleRead(index) {
-      const item = this.unread.splice(index, 1);
-      console.log(item);
-      this.read = item.concat(this.read);
+    handleReady(row) {
+      this.$store.state.foreCostom.push(row);
+      this.unComfCostom.pop(row);
     },
   },
   computed: {
-    unreadNum() {
-      return this.unread.length;
+    unComfCostomNum() {
+      return this.unComfCostom.length;
     },
   },
 };
