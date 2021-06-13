@@ -1,15 +1,14 @@
 <template>
-  <el-table
-    :data="dataItems"
-    ref="multipleTable"
-    @selection-change="handleSelectionChange"
-  >
-    <el-table-column type="selection" width="55"> </el-table-column>
+  <el-table :data="dataItems" ref="multipleTable">
     <template v-for="(name, index) in this.itemNames" :key="index">
       <el-table-column :label="name" :prop="name"></el-table-column>
     </template>
-    <el-table-column label="数量">
-      <el-input-number size="mini" v-model="num"></el-input-number>
+
+    <el-table-column label="采购数量">
+      <template #default="scope">
+        <el-input-number size="mini" :min="0" v-model="scope.row.采购数量">
+        </el-input-number>
+      </template>
     </el-table-column>
   </el-table>
 </template>
@@ -35,26 +34,10 @@ export default {
     return {
       dataItems: this.$props.tableData,
       itemNames: [],
-      multipleSelection: [],
-      num: 0,
     };
   },
-  watch: {
-    multipleSelection(val) {
-      this.$emit("selectedItems", val);
-    },
-  },
-  methods: {
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    selectAll() {
-      this.handleSelectionChange(this.dataItems);
-    },
-    reset() {
-      this.$refs.multipleTable.clearSelection();
-    },
-  },
+  watch: {},
+  methods: {},
 };
 </script>
 

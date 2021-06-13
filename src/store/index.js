@@ -35,7 +35,7 @@ export default createStore({
       {
         名称: "小鱼干",
         进价: 2,
-        剩余数量: 20,
+        剩余数量: 210,
       },
       {
         名称: "猫粮",
@@ -59,6 +59,7 @@ export default createStore({
       },
     ],
     rentedStuff: [],
+    orderData: [],
   },
   mutations: {
     delTagsItem(state, data) {

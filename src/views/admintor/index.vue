@@ -4,6 +4,7 @@
     <purchase-order
       v-if="openOrder"
       :orderData="SelectedItems"
+      @confirmClose="confirmClose"
       @close="closeOrder"
     ></purchase-order>
     <el-row>
@@ -15,6 +16,7 @@
             </div>
           </template>
           <data-table
+          ref="goods"
             @selectedItems="changeSelectGoods"
             :tableData="goodsItems"
           ></data-table>
@@ -28,6 +30,7 @@
             </div>
           </template>
           <data-table
+           ref="catFood"
             @selectedItems="changeSelectFoods"
             :tableData="catFoodsItems"
           ></data-table>
@@ -82,6 +85,13 @@ export default {
     },
     changeSelectFoods(val) {
       this.selectCatFoods = val;
+    },
+    confirmClose() {
+      this.selectedGoods = [];
+      this.selectCatFoods = [];
+      this.$refs.goods.reset()
+      this.$refs.catFood.reset()
+      this.openOrder = false;
     },
     closeOrder() {
       this.openOrder = false;
