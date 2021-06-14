@@ -1,5 +1,4 @@
 import { createStore } from "vuex";
-
 export default createStore({
   state: {
     tagsList: [],
@@ -57,14 +56,21 @@ export default createStore({
         租金: 20,
         剩余数量: 2,
       },
+      {
+        名称: "逗猫激光笔",
+        租金: 20,
+        剩余数量: 2,
+      },
+      {
+        名称: "逗猫激光笔",
+        租金: 20,
+        剩余数量: 2,
+      },
     ],
     rentedStuff: [],
     orderData: [],
 
-    cat: [
-      { 名字: "西西", 年龄: 5, 健康状态: "健康" },
-      { 名字: "哈哈", 年龄: 6, 健康状态: "健康" },
-    ],
+    cat: [],
     workers: [
       { 名字: "didi", 年龄: 21, 缺勤: 0, 工资: 5000 },
       { 名字: "gege", 年龄: 20, 缺勤: 3, 工资: 5000 },

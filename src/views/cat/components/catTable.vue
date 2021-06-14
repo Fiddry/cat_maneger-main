@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table :data="Data" style="width: 100%">
-      <el-table-column type="expand">
+      <!-- <el-table-column type="expand">
         <template #default="props">
           <el-form label-position="left" inline class="demo-table-expand">
             <el-form-item label="名字">
@@ -15,7 +15,7 @@
             </el-form-item>
           </el-form>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <template v-for="(item, index) in itemNames" :key="index">
         <el-table-column :label="item" :prop="item"></el-table-column>
