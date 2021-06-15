@@ -19,7 +19,7 @@ export default {
     if (this.$props.titles) {
       this.itemNames = this.$props.titles;
     } else {
-      if (this.dataItems[0]) {
+      if (this.dataItems) {
         for (let i in this.dataItems[0]) {
           this.itemNames.push(i);
         }

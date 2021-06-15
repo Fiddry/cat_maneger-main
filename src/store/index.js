@@ -1,80 +1,25 @@
 import { createStore } from "vuex";
+
 export default createStore({
   state: {
     tagsList: [],
     collapse: false,
-    costom: [
-      {
-        name: "张飞",
-        gender: "男",
-        age: "34",
-        time: "5:30",
-        money: "300",
-      },
-    ],
-    foreCostom: [
-      {
-        name: "1",
-        telephone: "1",
-        gender: "1",
-        time: "1",
-        money: "1",
-      },
-      {
-        name: "2",
-        telephone: "2",
-        gender: "2",
-        time: "2",
-        money: "2",
-      },
-    ],
+    costom: ["1"],
+    foreCostom: [],
 
     Items: ["物品名称", "单价", "剩余数量"],
-    catFoodsItems: [
-      {
-        名称: "小鱼干",
-        进价: 2,
-        剩余数量: 210,
-      },
-      {
-        名称: "猫粮",
-        进价: 20,
-        剩余数量: 20,
-      },
-    ],
-    goodsItems: [
-      {
-        名称: "旺仔小馒头",
-        单价: 2,
-        剩余数量: 2,
-      },
-    ],
+    catFoodsItems: [],
+    goodsItems: [],
     boughtGoods: [],
-    stuffItems: [
-      {
-        名称: "逗猫激光笔",
-        租金: 20,
-        剩余数量: 2,
-      },
-      {
-        名称: "逗猫激光笔",
-        租金: 20,
-        剩余数量: 2,
-      },
-      {
-        名称: "逗猫激光笔",
-        租金: 20,
-        剩余数量: 2,
-      },
-    ],
+    saleGoods: [],
+    drinks: [],
+    admission: [],
+    stuffItems: [],
     rentedStuff: [],
     orderData: [],
 
     cat: [],
-    workers: [
-      { 名字: "didi", 年龄: 21, 缺勤: 0, 工资: 5000 },
-      { 名字: "gege", 年龄: 20, 缺勤: 3, 工资: 5000 },
-    ],
+    workers: [],
   },
   mutations: {
     delTagsItem(state, data) {

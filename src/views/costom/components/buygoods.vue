@@ -6,42 +6,90 @@
     :before-close="handleClose"
     destroy-on-close
   >
-    <data-table
-      ref="dataTable"
-      @selectedItems="changeBuyGoods"
-      :tableData="goodsItems"
-    ></data-table>
+    <div style="height:200px;overflow:auto">
+      <data-table
+        ref="dataTable"
+        @selectedItems="changeBuyAdmission"
+        :tableData="admission"
+      ></data-table>
+    </div>
+    <div style="height:200px;overflow:auto">
+      <data-table
+        ref="dataTable"
+        @selectedItems="changeBuySaleGoods"
+        :tableData="saleGoods"
+      ></data-table>
+    </div>
+    <div style="height:200px;overflow:auto">
+      <data-table
+        ref="dataTable"
+        @selectedItems="changeBuyDrinks"
+        :tableData="drinks"
+      ></data-table>
+    </div>
     <el-button @click="confirm">确认</el-button>
     <el-button @click="reset">重置</el-button>
     <div style="text-align:center"><span>已买物品</span></div>
     <data-table :tableData="boughtGoods"></data-table>
-    
   </el-drawer>
 </template>
 
 <script>
 import dataTable from "../../../components/table.vue";
+import axios from "axios";
+
 export default {
   props: ["drawer"],
   components: {
     dataTable,
   },
+  created() {
+    axios.get("/api/goods/selectGS").then((res) => {
+      this.$store.state.saleGoods = res.data;
+    });
+    axios.get("/api/goods/selectGD").then((res) => {
+      this.$store.state.drinks = res.data;
+    });
+    axios.get("/api/goods/selectGA").then((res) => {
+      this.$store.state.admission = res.data;
+    });
+  },
   data() {
     return {
-      goodsItems: this.$store.state.goodsItems,
-      multipleSelection: [],
+      Admission: [],
+      SaleGoods: [],
+      Drinks: [],
+      Selection: [],
     };
   },
   computed: {
     boughtGoods() {
       return this.$store.state.boughtGoods;
     },
+
+    saleGoods() {
+      return this.$store.state.saleGoods;
+    },
+    admission() {
+      return this.$store.state.admission;
+    },
+    drinks() {
+      return this.$store.state.drinks;
+    },
+    multipleSelection() {
+      return this.Admission.concat(this.SaleGoods.concat(this.Drinks));
+    },
   },
   methods: {
-    changeBuyGoods(val) {
-      this.multipleSelection = val;
+    changeBuyAdmission(val) {
+      this.Admission = val;
     },
-
+    changeBuySaleGoods(val) {
+      this.SaleGoods = val;
+    },
+    changeBuyDrinks(val) {
+      this.Drinks = val;
+    },
     handleClose(done) {
       this.$confirm("确认关闭？")
         .then(() => {

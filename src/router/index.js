@@ -16,7 +16,7 @@ const routes = [
         component: () => import("../views/default/index.vue"),
       },
       {
-        path: "/costom",
+        path: "costom",
         name: "costom",
         meta: {
           title: "顾客",
@@ -28,7 +28,7 @@ const routes = [
           ),
       },
       {
-        path: "/admin",
+        path: "admin",
         name: "admin",
         meta: {
           title: "仓库管理",
@@ -40,7 +40,7 @@ const routes = [
           ),
       },
       {
-        path: "/cat",
+        path: "cat",
         name: "cat",
         meta: {
           title: "猫咪",
@@ -52,7 +52,7 @@ const routes = [
           ),
       },
       {
-        path: "/worker",
+        path: "worker",
         name: "worker",
         meta: {
           title: "员工",
@@ -64,7 +64,7 @@ const routes = [
           ),
       },
       {
-        path: "/tabs",
+        path: "tabs",
         name: "tabs",
         meta: {
           title: "预约信息",

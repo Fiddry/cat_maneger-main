@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="Data" style="width: 100%">
+    <el-table :data="this.Data" style="width: 100%">
       <!-- <el-table-column type="expand">
         <template #default="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -26,6 +26,7 @@
         </template>
       </el-table-column>
     </el-table>
+
     <cat-edit
       v-if="catEdit"
       :Visible="catEdit"
@@ -44,25 +45,12 @@ export default {
   },
   data() {
     return {
-      Data: this.$props.tableData,
       itemNames: [],
       catEdit: false,
       row: {},
     };
   },
-  created() {
-    if (this.$props.titles) {
-      this.itemNames = this.$props.titles;
-    } else {
-      if (this.Data[0]) {
-        for (let i in this.Data[0]) {
-          this.itemNames.push(i);
-        }
-      } else {
-        this.itemNames = this.$store.state.Items;
-      }
-    }
-  },
+
   methods: {
     openEdit(row) {
       this.catEdit = true;
@@ -70,6 +58,21 @@ export default {
     },
     closeCatEdit() {
       this.catEdit = false;
+    },
+  },
+  watch: {
+    Data(val) {
+      console.log(val);
+      this.itemNames = [];
+      for (let i in this.Data[0]) {
+        this.itemNames.push(i);
+      }
+      return val;
+    },
+  },
+  computed: {
+    Data() {
+      return this.$props.tableData;
     },
   },
 };

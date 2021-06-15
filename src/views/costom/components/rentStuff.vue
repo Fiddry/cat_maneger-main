@@ -18,6 +18,7 @@
       ref="dataRent"
       @selectedItems="selectedItems"
       :tableData="rentedStuff"
+      :titles="title"
     ></data-table>
     <el-button @click="backRent">归还物品</el-button>
     <el-button @click="getRid">物品已损坏</el-button>
@@ -27,20 +28,32 @@
 <script>
 import dataTable from "../../../components/table.vue";
 import { ElMessage } from "element-plus";
+import axios from "axios";
 export default {
   props: ["drawer"],
+  created() {
+    axios.get("/api/catToys/selectToys").then((res) => {
+      this.$store.state.stuffItems = res.data;
+    });
+  },
   components: {
     dataTable,
   },
   data() {
     return {
-      stuffItems: this.$store.state.stuffItems,
-      rentedStuff: this.$store.state.rentedStuff,
       multipleSelection: [],
-      Rented: [],
+      selectedRented: [],
+      title: ["itemsName"],
     };
   },
-  computed: {},
+  computed: {
+    stuffItems() {
+      return this.$store.state.stuffItems;
+    },
+    rentedStuff() {
+      return this.$store.state.rentedStuff;
+    },
+  },
   methods: {
     changestuffItems(val) {
       this.multipleSelection = val;
@@ -59,6 +72,11 @@ export default {
       this.$confirm("确认所租物品并关闭？")
         .then(() => {
           this.multipleSelection.forEach((item) => {
+            this.$store.state.stuffItems.forEach((i) => {
+              if (i === item) {
+                i.remindNumber--;
+              }
+            });
             this.$store.state.rentedStuff.push(item);
           });
           this.multipleSelection = [];
@@ -71,8 +89,18 @@ export default {
       this.multipleSelection = [];
     },
     backRent() {
-      this.Rented.forEach((item) => {
+      console.log(this.selectedRented);
+      let _this = this;
+      this.selectedRented.forEach((item) => {
         this.$store.state.rentedStuff.forEach(function(val, index, arr) {
+          console.log(val);
+          _this.$store.state.stuffItems.forEach((i) => {
+            console.log(i.itemsName);
+            console.log(item.itemsName);
+            if (i.itemsName == item.itemsName) {
+              i.remindNumber++;
+            }
+          });
           if (item == val) {
             arr.splice(index, 1);
           }
@@ -80,7 +108,7 @@ export default {
       });
     },
     getRid() {
-      this.Rented.forEach((item) => {
+      this.selectedRented.forEach((item) => {
         this.$store.state.rentedStuff.forEach(function(val, index, arr) {
           if (item == val) {
             arr.splice(index, 1);
@@ -93,7 +121,7 @@ export default {
       });
     },
     selectedItems(val) {
-      this.Rented = val;
+      this.selectedRented = val;
     },
   },
 };
