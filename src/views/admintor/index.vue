@@ -8,7 +8,7 @@
       @close="closeOrder"
     ></purchase-order>
     <el-row>
-      <el-col :span="6">
+      <el-col :span="7">
         <el-card>
           <template #header>
             <div class="card-header">
@@ -16,13 +16,13 @@
             </div>
           </template>
           <data-table
-          ref="goods"
+            ref="goods"
             @selectedItems="changeSelectGoods"
             :tableData="goodsItems"
           ></data-table>
         </el-card>
       </el-col>
-      <el-col :offset="2" :span="6">
+      <el-col :offset="2" :span="8">
         <el-card>
           <template #header>
             <div class="card-header">
@@ -30,9 +30,9 @@
             </div>
           </template>
           <data-table
-           ref="catFood"
-            @selectedItems="changeSelectFoods"
-            :tableData="catFoodsItems"
+            ref="catProducts"
+            @selectedItems="changeSelectCatProducts"
+            :tableData="catProducts"
           ></data-table>
         </el-card>
       </el-col>
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import dataTable from "../../components/table.vue";
 import purchaseOrder from "./components/Purchase-order.vue";
 export default {
@@ -48,26 +49,30 @@ export default {
     dataTable,
     purchaseOrder,
   },
+  created() {
+    axios.get("/api/goods/list").then((resp) => {
+      this.$store.state.goodsItems = resp.data;
+    });
+    axios.get("/api/catProducts/list").then((resp) => {
+      this.$store.state.catProducts = resp.data;
+    });
+  },
   data() {
     return {
       openOrder: false,
-      goodsItems: this.$store.state.goodsItems,
-      catFoodsItems: this.$store.state.catFoodsItems,
       selectedGoods: [],
-      selectCatFoods: [],
+      selectCatProducts: [],
     };
   },
   computed: {
     SelectedItems() {
-      let items = [];
-      this.selectedGoods.forEach((item) => {
-        items.push(item);
-      });
-      this.selectCatFoods.forEach((item) => {
-        items.push(item);
-      });
-      console.log(this.items);
-      return items;
+      return this.selectedGoods.concat(this.selectCatProducts);
+    },
+    goodsItems() {
+      return this.$store.state.goodsItems;
+    },
+    catProducts() {
+      return this.$store.state.catProducts;
     },
   },
   watch: {
@@ -83,14 +88,14 @@ export default {
     changeSelectGoods(val) {
       this.selectedGoods = val;
     },
-    changeSelectFoods(val) {
-      this.selectCatFoods = val;
+    changeSelectCatProducts(val) {
+      this.selectCatProducts = val;
     },
     confirmClose() {
       this.selectedGoods = [];
-      this.selectCatFoods = [];
-      this.$refs.goods.reset()
-      this.$refs.catFood.reset()
+      this.selectCatProducts = [];
+      this.$refs.goods.reset();
+      this.$refs.catFood.reset();
       this.openOrder = false;
     },
     closeOrder() {

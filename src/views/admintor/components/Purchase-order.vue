@@ -4,7 +4,7 @@
       ref="dataTable"
       @selectedItems="selectedItems"
       :tableData="tableData"
-      :titles="titles"
+      :titles="title"
     ></data-table>
     <el-button @click="confirm">确认采购单</el-button>
     <el-button @click="complete">完成采购</el-button>
@@ -22,7 +22,7 @@ export default {
 
   data() {
     return {
-      titles: ["名称"],
+      title: ["name"],
       dialogVisible: true,
       tableData: this.$props.orderData,
     };

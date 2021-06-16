@@ -6,6 +6,7 @@
     :before-close="handleClose"
     destroy-on-close
   >
+    <span>套餐</span>
     <div style="height:200px;overflow:auto">
       <data-table
         ref="dataTable"
@@ -13,6 +14,8 @@
         :tableData="admission"
       ></data-table>
     </div>
+
+    <span>猫咪食品</span>
     <div style="height:200px;overflow:auto">
       <data-table
         ref="dataTable"
@@ -20,6 +23,8 @@
         :tableData="saleGoods"
       ></data-table>
     </div>
+
+    <span>饮品甜点</span>
     <div style="height:200px;overflow:auto">
       <data-table
         ref="dataTable"
@@ -117,4 +122,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+span {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+</style>

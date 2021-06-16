@@ -20,6 +20,11 @@
                 <span class="message-title">{{ scope.row.name }}</span>
               </template>
             </el-table-column>
+            <el-table-column>
+              <template #default="scope">
+                <span class="message-title">{{ scope.row.appointmentTime }}</span>
+              </template>
+            </el-table-column>
             <el-table-column prop="time" width="180"></el-table-column>
             <el-table-column width="120">
               <template #default="scope">
@@ -29,9 +34,6 @@
               </template>
             </el-table-column>
           </el-table>
-          <div class="handle-row">
-            <el-button type="primary">全部确认</el-button>
-          </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -39,21 +41,20 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "tabs",
+  created() {
+    axios.get("/api/consumerAppointment/list").then((resp) => {
+      console.log('resp.data :>> ', resp.data);
+      this.unComfCostom = resp.data;
+    });
+  },
   data() {
     return {
       message: "first",
       showHeader: false,
-      unComfCostom: [
-        {
-          time: "2018-04-19 20:00:00",
-          name: "陈先生",
-          telephone: "1",
-          gender: "1",
-          money: "1",
-        },
-      ],
+      unComfCostom: [],
     };
   },
   methods: {

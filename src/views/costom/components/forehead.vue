@@ -43,6 +43,7 @@ export default {
       this.multipleSelection.forEach((item) => {
         this.$store.state.foreCostom.pop(item);
       });
+      //  this.$store.state.rentedStuff.forEach(function(val, index, arr){} ,
       this.multipleSelection = [];
     },
   },
