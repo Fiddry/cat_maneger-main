@@ -59,6 +59,11 @@ export default {
       items: [
         {
           icon: "el-icon-lx-people",
+          index: "index",
+          title: "首页",
+        },
+        {
+          icon: "el-icon-lx-people",
           index: "costom",
           title: "顾客",
         },
@@ -71,6 +76,11 @@ export default {
           icon: "el-icon-lx-profile",
           index: "cat",
           title: "猫咪",
+        },
+        {
+          icon: "el-icon-lx-profile",
+          index: "catInfo",
+          title: "猫咪信息",
         },
         {
           icon: "el-icon-lx-profile",

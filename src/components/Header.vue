@@ -12,7 +12,7 @@
                 <div class="btn-bell">
                     <el-tooltip
                         effect="dark"
-                        :content="message?`有${message}条未读消息`:`消息中心`"
+                        :content="message?`有3条未读消息`:`消息中心`"
                         placement="bottom"
                     >
                         <router-link to="/tabs">
@@ -67,9 +67,9 @@ export default {
         handleCommand(command) {
             if (command == "loginout") {
                 localStorage.removeItem("ms_username");
-                this.$router.push("/login");
+                this.$router.push("/Login");
             }
-        },
+        },  
         // 侧边栏折叠
         collapseChage() {
             this.$store.commit("hadndleCollapse", !this.collapse);

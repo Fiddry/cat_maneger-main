@@ -7,31 +7,29 @@
     destroy-on-close
   >
     <span>套餐</span>
-    <div style="height:200px;overflow:auto">
-      <data-table
-        ref="dataTable"
-        @selectedItems="changeBuyAdmission"
-        :tableData="admission"
-      ></data-table>
-    </div>
+    <data-table
+      ref="dataTable"
+      @selectedItems="changeBuyAdmission"
+      :tableData="admission"
+      :height="height"
+    ></data-table>
 
     <span>猫咪食品</span>
-    <div style="height:200px;overflow:auto">
-      <data-table
-        ref="dataTable"
-        @selectedItems="changeBuySaleGoods"
-        :tableData="saleGoods"
-      ></data-table>
-    </div>
+
+    <data-table
+      ref="dataTable"
+      @selectedItems="changeBuySaleGoods"
+      :tableData="saleGoods"
+      :height="height"
+    ></data-table>
 
     <span>饮品甜点</span>
-    <div style="height:200px;overflow:auto">
-      <data-table
-        ref="dataTable"
-        @selectedItems="changeBuyDrinks"
-        :tableData="drinks"
-      ></data-table>
-    </div>
+    <data-table
+      ref="dataTable"
+      @selectedItems="changeBuyDrinks"
+      :tableData="drinks"
+      :height="height"
+    ></data-table>
     <el-button @click="confirm">确认</el-button>
     <el-button @click="reset">重置</el-button>
     <div style="text-align:center"><span>已买物品</span></div>
@@ -65,6 +63,7 @@ export default {
       SaleGoods: [],
       Drinks: [],
       Selection: [],
+      height: "150px",
     };
   },
   computed: {
@@ -109,6 +108,8 @@ export default {
         .then(() => {
           this.multipleSelection.forEach((item) => {
             this.$store.state.boughtGoods.push(item);
+            console.log("item.goodsID :>> ", item.goodsID);
+            axios.post("/api/goods/backID" + item.goodsID);
           });
           this.$emit("changedrawer");
         })

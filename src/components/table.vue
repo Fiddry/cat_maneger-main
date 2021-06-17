@@ -1,6 +1,8 @@
 <template>
   <el-table
-    :data="dataItems"
+    style="width: 100%"
+    :data="this.dataItems"
+    :height="this.$props.height"
     ref="multipleTable"
     @selection-change="handleSelectionChange"
   >
@@ -13,13 +15,13 @@
 
 <script>
 export default {
-  props: ["tableData", "titles"],
+  props: ["tableData", "titles", "height"],
 
   created() {
     if (this.$props.titles) {
       this.itemNames = this.$props.titles;
     } else {
-      if (this.dataItems) {
+      if (this.$props.tableData) {
         for (let i in this.dataItems[0]) {
           this.itemNames.push(i);
         }
@@ -27,15 +29,38 @@ export default {
         this.itemNames = this.$store.state.Items;
       }
     }
+    //this.$refs.multipleTable;
+    // element.setAttribute("height", this.$props.height);
+  },
+  updated() {
+    if (this.dataItems) {
+      for (let i in this.dataItems[0]) {
+        this.itemNames.push(i);
+      }
+    } else {
+      this.itemNames = this.$store.state.Items;
+    }
+
+    //this.$refs.multipleTable;
+    // element.setAttribute("height", this.$props.height);
+  },
+  computed: {
+    dataItems() {
+      return this.$props.tableData;
+    },
   },
   data() {
     return {
-      dataItems: this.$props.tableData,
+      // dataItem: this.$props.tableData,
       itemNames: [],
       multipleSelection: [],
     };
   },
   watch: {
+    // dataItems(val) {
+    //   console.log("2 :>> ", val);
+    //   return val;
+    // },
     multipleSelection(val) {
       this.$emit("selectedItems", val);
     },

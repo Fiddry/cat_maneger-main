@@ -71,7 +71,10 @@ export default {
     confirm() {
       this.$confirm("确认所租物品并关闭？")
         .then(() => {
+          console.log("this.multipleSelection :>> ", this.multipleSelection);
           this.multipleSelection.forEach((item) => {
+            console.log("ren :>> ", item);
+            axios.post("/api/itemLeale/addRent"+item.itemsID).then(() => {}); 
             this.$store.state.stuffItems.forEach((i) => {
               if (i === item) {
                 i.remindNumber--;

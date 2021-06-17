@@ -6,7 +6,7 @@
 
     <el-table-column label="采购数量">
       <template #default="scope">
-        <el-input-number size="mini" :min="0" v-model="scope.row.采购数量">
+        <el-input-number size="mini" :min="0" v-model="scope.row.number">
         </el-input-number>
       </template>
     </el-table-column>
@@ -30,14 +30,15 @@ export default {
       }
     }
   },
+  methods: {},
   data() {
     return {
-      dataItems: this.$props.tableData,
       itemNames: [],
+      dataItems: this.$props.tableData,
     };
   },
   watch: {},
-  methods: {},
+  computed: {},
 };
 </script>
 

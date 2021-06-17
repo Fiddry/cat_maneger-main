@@ -1,5 +1,15 @@
 <template>
   <el-card>
+    <el-input
+      placeholder="请输入猫咪信息"
+      v-model="search"
+      class="input-with-select"
+    >
+      <template #append>
+        <el-button @click="tip" icon="el-icon-search"></el-button>
+      </template>
+    </el-input>
+
     <cat-table :tableData="catData"></cat-table>
   </el-card>
   <div class="block">
@@ -32,19 +42,18 @@ export default {
         this.$store.state.cat = response.data.data;
       });
   },
-  updated() {
-    axios
-      .get("/api/cat/catspage", {
-        params: {
-          pageSize: this.pageSize,
-          currentPage: this.currentPage,
-        },
-      })
-      .then((response) => {
-        this.$store.state.cat = response.data.data;
-        console.log(response.data.data);
-      });
-  },
+  // updated() {
+  //   axios
+  //     .get("/api/cat/catspage", {
+  //       params: {
+  //         pageSize: this.pageSize,
+  //         currentPage: this.currentPage,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       this.$store.state.cat = response.data.data;
+  //     });
+  // },
   components: {
     catTable,
   },
@@ -53,6 +62,7 @@ export default {
       pageSize: 5,
       currentPage: 1,
       total: 12,
+      search: "",
     };
   },
   methods: {
@@ -61,6 +71,13 @@ export default {
     },
     handleCurrentChange(val) {
       this.currentPage = val;
+    },
+    tip() {
+      axios.post("/api/cat/selectCat" + this.search).then((resp) => {
+        console.log("resp :>> ", resp);
+        this.$store.state.cat = [];
+        this.$store.state.cat.push(resp.data);
+      });
     },
   },
   watch: {

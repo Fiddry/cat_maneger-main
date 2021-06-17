@@ -6,6 +6,8 @@
       @changeVisible="changeVisible"
       :Visible="Visible"
     ></forehead>
+    <el-button @click="v1 = true">新增顾客</el-button>
+    <new-costom v-if="v1" @closeNew="closeNew"></new-costom>
     <el-table :data="costom">
       <el-table-column label="顾客名称" prop="name"></el-table-column>
       <el-table-column label="性别" prop="gender"></el-table-column>
@@ -29,14 +31,23 @@
 import forehead from "./components/forehead.vue";
 import buygoods from "./components/buygoods.vue";
 import rentStuf from "./components/rentStuff.vue";
+import newCostom from "./components/newCostom.vue";
+// import axios from "axios";
 export default {
   components: {
     forehead,
     buygoods,
     rentStuf,
+    newCostom,
+  },
+  created() {
+    // axios.get("/api/cashierOrder/selectSale").then((resp) => {
+    //   this.$store.state.saleData = resp.data;
+    // });
   },
   data() {
     return {
+      v1: false,
       Visible: false,
       Buy: false,
       Rent: false,
@@ -70,6 +81,11 @@ export default {
           this.costom.pop(row.$index);
         })
         .catch(() => {});
+    },
+    closeNew(val) {
+      this.v1 = false;
+      console.log(val);
+      this.$store.state.costom.push(val)
     },
   },
 };

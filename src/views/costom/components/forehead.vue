@@ -35,13 +35,20 @@ export default {
       this.$emit("changeVisible");
     },
     changeComedCostom(val) {
+      console.log("val :>> ", val);
       this.multipleSelection = val;
-      console.log(val);
     },
     come() {
+      Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+          this.splice(index, 1);
+        }
+      };
+      console.log('this. :>> ', this.multipleSelection);
       this.$emit("comeCostom", this.multipleSelection);
       this.multipleSelection.forEach((item) => {
-        this.$store.state.foreCostom.pop(item);
+        this.$store.state.foreCostom.remove(item);
       });
       //  this.$store.state.rentedStuff.forEach(function(val, index, arr){} ,
       this.multipleSelection = [];

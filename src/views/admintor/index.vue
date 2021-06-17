@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-button @click="this.openOrder = true">打开待采购单</el-button>
+    <el-affix :offset="120">
+      <el-button @click="this.openOrder = true">打开待采购单</el-button>
+    </el-affix>
     <purchase-order
       v-if="openOrder"
       :orderData="SelectedItems"
@@ -8,31 +10,78 @@
       @close="closeOrder"
     ></purchase-order>
     <el-row>
-      <el-col :span="7">
+      <el-col :offset="2" :span="9">
         <el-card>
           <template #header>
             <div class="card-header">
-              <span>商品单</span>
+              <span>猫咪服饰</span>
             </div>
           </template>
           <data-table
-            ref="goods"
-            @selectedItems="changeSelectGoods"
-            :tableData="goodsItems"
+            ref="catClo"
+            @selectedItems="changeSelectcatClo"
+            :tableData="catClo"
+            :height="height"
           ></data-table>
         </el-card>
       </el-col>
-      <el-col :offset="2" :span="8">
+      <el-col :offset="2" :span="9">
         <el-card>
           <template #header>
             <div class="card-header">
-              <span>猫咪商品单</span>
+              <span>猫咪食品</span>
             </div>
           </template>
           <data-table
-            ref="catProducts"
-            @selectedItems="changeSelectCatProducts"
-            :tableData="catProducts"
+            ref="catFood"
+            @selectedItems="changeSelectcatFood"
+            :tableData="catFood"
+            :height="height"
+          ></data-table>
+        </el-card>
+      </el-col>
+      <el-col :offset="2" :span="9">
+        <el-card>
+          <template #header>
+            <div class="card-header">
+              <span>原料类</span>
+            </div>
+          </template>
+          <data-table
+            ref="rawMaterial"
+            @selectedItems="changeSelectrawMaterial"
+            :tableData="rawMaterial"
+            :height="height"
+          ></data-table>
+        </el-card>
+      </el-col>
+      <el-col :offset="2" :span="9">
+        <el-card>
+          <template #header>
+            <div class="card-header">
+              <span>商品类</span>
+            </div>
+          </template>
+          <data-table
+            ref="saleGoods"
+            @selectedItems="changeSelectsaleGoods"
+            :tableData="saleGoods"
+            :height="height"
+          ></data-table>
+        </el-card>
+      </el-col>
+      <el-col :offset="2" :span="9">
+        <el-card>
+          <template #header>
+            <div class="card-header">
+              <span>猫咪玩具类</span>
+            </div>
+          </template>
+          <data-table
+            ref="catToys"
+            @selectedItems="changeSelectcatToys"
+            :tableData="catToys"
+            :height="height"
           ></data-table>
         </el-card>
       </el-col>
@@ -44,52 +93,96 @@
 import axios from "axios";
 import dataTable from "../../components/table.vue";
 import purchaseOrder from "./components/Purchase-order.vue";
+import { useStore } from "vuex";
+// import { init } from "echarts/core";
+// import { ref } from "vue";
 export default {
   components: {
     dataTable,
     purchaseOrder,
   },
-  created() {
-    axios.get("/api/goods/list").then((resp) => {
-      this.$store.state.goodsItems = resp.data;
+  setup() {
+    const store = useStore();
+    axios.get("/api/catApparel/list").then((resp) => {
+      store.state.catClo = resp.data;
     });
-    axios.get("/api/catProducts/list").then((resp) => {
-      this.$store.state.catProducts = resp.data;
+    axios.get("/api/catFood/list").then((resp) => {
+      // console.log("resp.data :>> ", resp.data);
+      store.state.catFood = resp.data;
+    });
+    axios.get("/api/rawMaterial/list").then((resp) => {
+      // console.log("resp.data :>> ", resp.data);
+      store.state.rawMaterial = resp.data;
+    });
+    axios.get("/api/saleGoods/list").then((resp) => {
+      // console.log("resp.data :>> ", resp.data);
+      store.state.saleGoods = resp.data;
+    });
+    axios.get("/api/catToys/selectToys").then((resp) => {
+      // console.log("resp.data :>> ", resp.data);
+      store.state.catToys = resp.data;
     });
   },
   data() {
     return {
+      height: "300px",
       openOrder: false,
       selectedGoods: [],
       selectCatProducts: [],
+      selectedcatClo: [],
+      selectedcatFood: [],
+      selectedrawMaterial: [],
+      selectedsaleGoods: [],
+      selectedcatToys: [],
     };
   },
   computed: {
     SelectedItems() {
-      return this.selectedGoods.concat(this.selectCatProducts);
+      return this.selectedcatClo.concat(
+        this.selectedcatFood.concat(
+          this.selectedrawMaterial.concat(
+            this.selectedsaleGoods.concat(this.selectedcatToys)
+          )
+        )
+      );
     },
-    goodsItems() {
-      return this.$store.state.goodsItems;
+
+    catClo() {
+      return this.$store.state.catClo;
     },
-    catProducts() {
-      return this.$store.state.catProducts;
+    catFood() {
+      return this.$store.state.catFood;
+    },
+    rawMaterial() {
+      return this.$store.state.rawMaterial;
+    },
+    saleGoods() {
+      return this.$store.state.saleGoods;
+    },
+    catToys() {
+      return this.$store.state.catToys;
     },
   },
-  watch: {
-    // SelectedItems(val) {
-    //   console.log(val);
-    // },
-  },
+
   methods: {
     tip() {
       alert("物品新增成功");
     },
 
-    changeSelectGoods(val) {
-      this.selectedGoods = val;
+    changeSelectcatClo(val) {
+      this.selectedcatClo = val;
     },
-    changeSelectCatProducts(val) {
-      this.selectCatProducts = val;
+    changeSelectcatFood(val) {
+      this.selectedcatFood = val;
+    },
+    changeSelectrawMaterial(val) {
+      this.selectedrawMaterial = val;
+    },
+    changeSelectsaleGoods(val) {
+      this.selectedsaleGoods = val;
+    },
+    changeSelectcatToys(val) {
+      this.selectedcatToys = val;
     },
     confirmClose() {
       this.selectedGoods = [];

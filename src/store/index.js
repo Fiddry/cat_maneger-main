@@ -1,10 +1,9 @@
 import { createStore } from "vuex";
-
 export default createStore({
   state: {
     tagsList: [],
     collapse: false,
-    costom: [],
+    costom: ["1"],
     foreCostom: [],
     Items: ["物品名称", "单价", "剩余数量"],
     catProducts: [],
@@ -16,9 +15,13 @@ export default createStore({
     stuffItems: [],
     rentedStuff: [],
     orderData: [],
-
+    saleData: [],
     cat: [],
     workers: [],
+    catClo: [],
+    catFood: [],
+    rawMaterial: [],
+    catToys: [],
   },
   mutations: {
     delTagsItem(state, data) {

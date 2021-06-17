@@ -22,7 +22,9 @@
             </el-table-column>
             <el-table-column>
               <template #default="scope">
-                <span class="message-title">{{ scope.row.appointmentTime }}</span>
+                <span class="message-title">{{
+                  scope.row.appointmentTime
+                }}</span>
               </template>
             </el-table-column>
             <el-table-column prop="time" width="180"></el-table-column>
@@ -46,7 +48,7 @@ export default {
   name: "tabs",
   created() {
     axios.get("/api/consumerAppointment/list").then((resp) => {
-      console.log('resp.data :>> ', resp.data);
+      console.log("resp.data :>> ", resp.data);
       this.unComfCostom = resp.data;
     });
   },
@@ -59,8 +61,14 @@ export default {
   },
   methods: {
     handleReady(row) {
+      Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+          this.splice(index, 1);
+        }
+      };
       this.$store.state.foreCostom.push(row);
-      this.unComfCostom.pop(row);
+      this.unComfCostom.remove(row);
     },
   },
   computed: {

@@ -1,22 +1,34 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
-
+import { ElMessage } from "element-plus";
 const routes = [
   {
-    path: "",
+    path: "/Login",
+    name: "Login",
+    meta: {
+      title: "登录",
+    },
+    component: () =>
+      import(
+        /* webpackChunkName: "login" */
+        "../views/Login.vue"
+      ),
+  },
+  {
+    path: "/Home",
     name: "Home",
     component: Home,
     children: [
       {
-        path: "",
-        name: "",
+        path: "/index",
+        name: "index",
         meta: {
           title: "首页",
         },
         component: () => import("../views/default/index.vue"),
       },
       {
-        path: "costom",
+        path: "/costom",
         name: "costom",
         meta: {
           title: "顾客",
@@ -28,7 +40,7 @@ const routes = [
           ),
       },
       {
-        path: "admin",
+        path: "/admin",
         name: "admin",
         meta: {
           title: "仓库管理",
@@ -40,7 +52,7 @@ const routes = [
           ),
       },
       {
-        path: "cat",
+        path: "/cat",
         name: "cat",
         meta: {
           title: "猫咪",
@@ -52,10 +64,31 @@ const routes = [
           ),
       },
       {
-        path: "worker",
+        path: "/catInfo",
+        name: "catInfo",
+        meta: {
+          title: "猫咪信息",
+        },
+        component: () =>
+          import(
+            /* webpackChunkName: "catInfo" */
+            "../views/catInfo/index.vue"
+          ),
+      },
+      {
+        path: "/worker",
         name: "worker",
         meta: {
           title: "员工",
+        },
+        beforeEnter: (to, from, next) => {
+          const role = localStorage.getItem("ms_username");
+          if (role == "admin") {
+            next();
+          } else {
+            ElMessage.error("对不起，不是管理员能进去");
+            // next("worker")
+          }
         },
         component: () =>
           import(
@@ -64,7 +97,7 @@ const routes = [
           ),
       },
       {
-        path: "tabs",
+        path: "/tabs",
         name: "tabs",
         meta: {
           title: "预约信息",
@@ -76,18 +109,6 @@ const routes = [
           ),
       },
     ],
-  },
-  {
-    path: "/login",
-    name: "Login",
-    meta: {
-      title: "登录",
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "login" */
-        "../views/Login.vue"
-      ),
   },
 ];
 
@@ -103,7 +124,7 @@ router.beforeEach((to, from, next) => {
     next("/login");
   } else if (to.meta.permission) {
     // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
-    role === "admin" ? next() : next("/403");
+    role === "admin" ? next() : next("/login");
   } else {
     next();
   }

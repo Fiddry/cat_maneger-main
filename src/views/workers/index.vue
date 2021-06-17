@@ -1,6 +1,6 @@
 <template>
   <div>
-    <workerTable :tableData="data"></workerTable>
+    <workerTable :titles="title" :tableData="data"></workerTable>
   </div>
 </template>
 
@@ -12,16 +12,23 @@ export default {
     workerTable,
   },
   created() {
-    axios.get("/api/admin/list").then((resp) => {
+    axios.get("/api/employ/list").then((resp) => {
       this.$store.state.workers = resp.data;
     });
   },
+  // updated() {
+  //   axios.get("/api/employ/list").then((resp) => {
+  //     this.$store.state.workers = resp.data;
+  //   });
+  // },
   data() {
-    return {};
+    return {
+      title: ["employID","employName"],
+    };
   },
   computed: {
     data() {
-      return this.$store.state.workers;
+      return  this.$store.state.workers;
     },
   },
 };

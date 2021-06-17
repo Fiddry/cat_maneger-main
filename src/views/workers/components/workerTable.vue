@@ -1,38 +1,32 @@
 <template>
-  <div>
-    <el-table :data="Data" style="width: 100%">
-      <el-table-column type="expand">
-        <template #default="props">
-          <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="名字">
-              <span>{{ props.row.名字 }}</span>
+  <el-table :data="Data" style="width: 100%">
+    <el-table-column type="expand">
+      <template #default="props">
+        <el-form label-position="left" inline class="demo-table-expand">
+          <template v-for="(item, key) in props.row" :key="key">
+            <el-form-item :label="key">
+              <span>:&#12288;{{ item }}&#12288;&#12288;&#12288;&#12288;&#12288;</span>
             </el-form-item>
-            <el-form-item label="年龄">
-              <span>{{ props.row.年龄 }}</span>
-            </el-form-item>
-            <el-form-item label="健康状态">
-              <span>{{ props.row.健康状态 }}</span>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-table-column>
-
-      <template v-for="(item, index) in itemNames" :key="index">
-        <el-table-column :label="item" :prop="item"></el-table-column>
+          </template>
+        </el-form>
       </template>
-      <el-table-column label="操作">
-        <template #default="scope">
-          <el-button @click="openEdit(scope.row)">编辑员工信息</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <worker-edit
-      v-if="catEdit"
-      :Visible="catEdit"
-      @closeCatEdit="closeCatEdit"
-      :catData="this.row"
-    ></worker-edit>
-  </div>
+    </el-table-column>
+
+    <template v-for="(item, index) in itemNames" :key="index">
+      <el-table-column :label="item" :prop="item"></el-table-column>
+    </template>
+    <el-table-column label="操作">
+      <template #default="scope">
+        <el-button @click="openEdit(scope.row)">编辑员工信息</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+  <worker-edit
+    v-if="catEdit"
+    :Visible="catEdit"
+    @closeCatEdit="closeCatEdit"
+    :catData="this.row"
+  ></worker-edit>
 </template>
 
 <script>
@@ -45,6 +39,13 @@ export default {
   data() {
     return {
       Data: this.$props.tableData,
+      proptitles: [
+        "employID",
+        "employName",
+        "workTime",
+        "workCategoryName",
+        "absenteeism",
+      ],
       itemNames: [],
       catEdit: false,
       row: {},

@@ -9,7 +9,7 @@ import { PieChart } from "echarts/charts";
 import {
   TitleComponent,
   TooltipComponent,
-  LegendComponent
+  LegendComponent,
 } from "echarts/components";
 import VChart, { THEME_KEY } from "vue-echarts";
 import { ref, defineComponent } from "vue";
@@ -19,58 +19,73 @@ use([
   PieChart,
   TitleComponent,
   TooltipComponent,
-  LegendComponent
+  LegendComponent,
 ]);
-
+import { useStore } from "vuex";
+// import axios from 'axios'
 export default defineComponent({
   name: "HelloWorld",
+
   components: {
-    VChart
+    VChart,
   },
   provide: {
-    [THEME_KEY]: "dark"
+    [THEME_KEY]: "dark",
   },
-  setup: () => {
+  data() {
+    return {};
+  },
+
+  setup: function() {
+    const store = useStore();
+   
     const option = ref({
-      title: {
-        text: "Traffic Sources",
-        left: "center"
-      },
       tooltip: {
         trigger: "item",
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
       },
       legend: {
-        orient: "vertical",
-        left: "left",
-        data: ["Direct", "Email", "Ad Networks", "Video Ads", "Search Engines"]
+        top: "5%",
+        left: "center",
       },
       series: [
         {
-          name: "Traffic Sources",
+          name: "访问来源",
           type: "pie",
-          radius: "55%",
-          center: ["50%", "60%"],
-          data: [
-            { value: 335, name: "Direct" },
-            { value: 310, name: "Email" },
-            { value: 234, name: "Ad Networks" },
-            { value: 135, name: "Video Ads" },
-            { value: 1548, name: "Search Engines" }
-          ],
+          radius: ["40%", "70%"],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: "#fff",
+            borderWidth: 2,
+          },
+          
+          label: {
+            show: false,
+            position: "center",
+          },
           emphasis: {
-            itemStyle: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: "rgba(0, 0, 0, 0.5)"
-            }
-          }
-        }
-      ]
+            label: {
+              show: true,
+              fontSize: "40",
+              fontWeight: "bold",
+            },
+          },
+          labelLine: {
+            show: false,
+          },
+          // data: [
+          //   { value: 1048, name: "搜索引擎" },
+          //   { value: 735, name: "直接访问" },
+          //   { value: 580, name: "邮件营销" },
+          //   { value: 484, name: "联盟广告" },
+          //   { value: 300, name: "视频广告" },
+          // ],
+          data: store.state.saleData,
+        },
+      ],
     });
-
     return { option };
-  }
+  },
 });
 </script>
 

@@ -62,7 +62,7 @@ export default {
   },
   watch: {
     Data(val) {
-      console.log(val);
+      // console.log(val);
       this.itemNames = [];
       for (let i in this.Data[0]) {
         this.itemNames.push(i);

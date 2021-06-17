@@ -14,30 +14,50 @@
 <script>
 import { ElMessage } from "element-plus";
 import dataTable from "../components/table.vue";
+import axios from "axios";
 export default {
   props: ["orderData"],
   components: {
     dataTable,
   },
 
+  created() {
+    // console.log("object :>> ", this.$props.orderData);
+    this.$props.orderData.forEach((item) => {
+      item.number = 0;
+    });
+  },
   data() {
     return {
-      title: ["name"],
+      title: ["itemsName"],
       dialogVisible: true,
       tableData: this.$props.orderData,
+      addPurchase: [],
     };
   },
   methods: {
     handleClose() {
       this.$emit("close");
     },
+
     confirm() {
+      (this.$store.state.orderData = this.$refs.dataTable.dataItems),
+        console.log("object :>> ", this.$store.state.orderData);
+
+      this.$store.state.orderData.forEach((item) => {
+        // console.log("item.number :>> ", item.number);
+        console.log('item :>> ', item.itemsID);
+        axios.post("/api/merchandisePurchase/addPurchase/", {
+          goodsID:item.goodsID,
+          itemID: item.itemsID,
+          buyingQuantity: item.number,
+        });
+      });
       ElMessage.success({
         message: "已成功添加到采购单，并打印  ",
         type: "success",
       });
-      (this.$store.state.orderData = this.$refs.dataTable.dataItems),
-        this.$emit("close");
+      this.$emit("close");
     },
     complete() {
       ElMessage.success({
