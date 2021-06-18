@@ -25,7 +25,7 @@
     v-if="catEdit"
     :Visible="catEdit"
     @closeCatEdit="closeCatEdit"
-    :catData="this.row"
+    :workerData="this.row"
   ></worker-edit>
 </template>
 

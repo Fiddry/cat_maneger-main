@@ -3,7 +3,7 @@ export default createStore({
   state: {
     tagsList: [],
     collapse: false,
-    costom: ["1"],
+    costom: [],
     foreCostom: [],
     Items: ["物品名称", "单价", "剩余数量"],
     catProducts: [],

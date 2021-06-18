@@ -67,7 +67,7 @@ export default {
         handleCommand(command) {
             if (command == "loginout") {
                 localStorage.removeItem("ms_username");
-                this.$router.push("/Login");
+                this.$router.push("/");
             }
         },  
         // 侧边栏折叠

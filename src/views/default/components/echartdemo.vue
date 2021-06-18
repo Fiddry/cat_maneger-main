@@ -1,4 +1,5 @@
 <template>
+  <h1><slot></slot></h1>
   <v-chart class="chart" :option="option" />
 </template>
 
@@ -38,7 +39,7 @@ export default defineComponent({
 
   setup: function() {
     const store = useStore();
-   
+
     const option = ref({
       tooltip: {
         trigger: "item",
@@ -58,7 +59,7 @@ export default defineComponent({
             borderColor: "#fff",
             borderWidth: 2,
           },
-          
+
           label: {
             show: false,
             position: "center",

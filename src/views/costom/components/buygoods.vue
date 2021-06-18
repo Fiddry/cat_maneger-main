@@ -40,6 +40,7 @@
 <script>
 import dataTable from "../../../components/table.vue";
 import axios from "axios";
+import { ElMessage } from "element-plus";
 
 export default {
   props: ["drawer"],
@@ -108,8 +109,12 @@ export default {
         .then(() => {
           this.multipleSelection.forEach((item) => {
             this.$store.state.boughtGoods.push(item);
-            console.log("item.goodsID :>> ", item.goodsID);
-            axios.post("/api/goods/backID" + item.goodsID);
+            console.log("item :>> ", item.goodsID);
+            axios.put("/api/goods/backID" + item.goodsID);
+            axios.get("/api/cashierOrder/selectSale").then((resp) => {
+              this.$store.state.saleData = resp.data;
+            });
+            ElMessage.success("购买成功");
           });
           this.$emit("changedrawer");
         })

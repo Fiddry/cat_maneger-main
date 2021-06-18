@@ -16,8 +16,10 @@
 </template>
 
 <script>
+import axios from "axios";
+import { ElMessage } from "element-plus";
 export default {
-  props: ["catData", "Visible"],
+  props: ["workerData", "Visible"],
   created() {
     for (let i in this.Data) {
       this.itemNames.push(i);
@@ -25,7 +27,7 @@ export default {
   },
   data() {
     return {
-      Data: this.$props.catData,
+      Data: this.$props.workerData,
       v: true,
       itemNames: [],
     };
@@ -35,7 +37,14 @@ export default {
       this.$emit("closeCatEdit");
     },
     onSubmit() {
-      console.log(this.Data);
+      axios.put("/api/employ/editWorker", this.Data).then((Response) => {
+        if (Response) {
+          ElMessage.success("员工属性修改成功！");
+        }
+        else{
+          ElMessage.warning("员工属性修改失败，请联系相关人员！")
+        }
+      });
       this.close();
     },
   },

@@ -31,9 +31,17 @@ export default {
     return {
       title: ["itemsName"],
       dialogVisible: true,
-      tableData: this.$props.orderData,
+      // tableData: this.$props.orderData,
       addPurchase: [],
     };
+  },
+  computed: {
+    tableData() {
+      this.$props.orderData.forEach((item) => {
+        item.number = 10;
+      });
+      return this.$props.orderData
+    },
   },
   methods: {
     handleClose() {
@@ -42,17 +50,14 @@ export default {
 
     confirm() {
       (this.$store.state.orderData = this.$refs.dataTable.dataItems),
-        console.log("object :>> ", this.$store.state.orderData);
-
-      this.$store.state.orderData.forEach((item) => {
-        // console.log("item.number :>> ", item.number);
-        console.log('item :>> ', item.itemsID);
-        axios.post("/api/merchandisePurchase/addPurchase/", {
-          goodsID:item.goodsID,
-          itemID: item.itemsID,
-          buyingQuantity: item.number,
+        this.$store.state.orderData.forEach((item) => {
+          // console.log("item.number :>> ", item.number);
+          axios.post("/api/merchandisePurchase/addPurchase/", {
+            goodsID: item.goodsID,
+            itemID: item.itemsID,
+            buyingQuantity: item.number,
+          });
         });
-      });
       ElMessage.success({
         message: "已成功添加到采购单，并打印  ",
         type: "success",

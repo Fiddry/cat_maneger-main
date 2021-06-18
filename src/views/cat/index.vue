@@ -42,18 +42,18 @@ export default {
         this.$store.state.cat = response.data.data;
       });
   },
-  // updated() {
-  //   axios
-  //     .get("/api/cat/catspage", {
-  //       params: {
-  //         pageSize: this.pageSize,
-  //         currentPage: this.currentPage,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       this.$store.state.cat = response.data.data;
-  //     });
-  // },
+  updated() {
+    axios
+      .get("/api/cat/catspage", {
+        params: {
+          pageSize: this.pageSize,
+          currentPage: this.currentPage,
+        },
+      })
+      .then((response) => {
+        this.$store.state.cat = response.data.data;
+      });
+  },
   components: {
     catTable,
   },

@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import { ElMessage } from "element-plus";
 const routes = [
   {
-    path: "/Login",
+    path: "/",
     name: "Login",
     meta: {
       title: "登录",
@@ -113,18 +113,18 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes,
 });
 
 router.beforeEach((to, from, next) => {
   document.title = `${to.meta.title} | vue-manage-system`;
   const role = localStorage.getItem("ms_username");
-  if (!role && to.path !== "/login") {
-    next("/login");
+  if (!role && to.path !== "/") {
+    next("/");
   } else if (to.meta.permission) {
     // 如果是管理员权限则可进入，这里只是简单的模拟管理员权限而已
-    role === "admin" ? next() : next("/login");
+    role === "admin" ? next() : next("/");
   } else {
     next();
   }

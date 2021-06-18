@@ -71,10 +71,8 @@ export default {
     confirm() {
       this.$confirm("确认所租物品并关闭？")
         .then(() => {
-          console.log("this.multipleSelection :>> ", this.multipleSelection);
           this.multipleSelection.forEach((item) => {
-            console.log("ren :>> ", item);
-            axios.post("/api/itemLeale/addRent"+item.itemsID).then(() => {}); 
+            axios.post("/api/itemLeale/addRent" + item.itemsID).then(() => {});
             this.$store.state.stuffItems.forEach((i) => {
               if (i === item) {
                 i.remindNumber--;
@@ -83,7 +81,7 @@ export default {
             this.$store.state.rentedStuff.push(item);
           });
           this.multipleSelection = [];
-          this.$emit("changedrawer");
+          // this.$emit("changedrawer");
         })
         .catch(() => {});
     },
@@ -92,18 +90,12 @@ export default {
       this.multipleSelection = [];
     },
     backRent() {
-      console.log(this.selectedRented);
-      let _this = this;
       this.selectedRented.forEach((item) => {
         this.$store.state.rentedStuff.forEach(function(val, index, arr) {
-          console.log(val);
-          _this.$store.state.stuffItems.forEach((i) => {
-            console.log(i.itemsName);
-            console.log(item.itemsName);
-            if (i.itemsName == item.itemsName) {
-              i.remindNumber++;
-            }
-          });
+          if (val.itemsName == item.itemsName) {
+            console.log("i,item :>> ", val, item);
+            val.remindNumber++;
+          }
           if (item == val) {
             arr.splice(index, 1);
           }

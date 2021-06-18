@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>今日销售记录</h1>
-    <v-chart></v-chart>
+    <v-chart>今日销售商品</v-chart>
   </div>
 </template>
 
@@ -14,15 +13,13 @@ export default {
     vChart,
   },
   data() {},
-  async beforeCreate() {
-    await axios.get("/api/cashierOrder/selectSale").then((resp) => {
-      console.log("resp.data :>> ", resp.data);
+  beforeCreate() {
+    axios.get("/api/cashierOrder/selectSale").then((resp) => {
+      console.log("resp.data1 :>> ", resp.data);
       this.$store.state.saleData = resp.data;
     });
   },
-  created() {
-    console.log("object1 :>> ", this.$store.state.saleData);
-  },
+ 
 };
 </script>
 
