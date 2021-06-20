@@ -90,14 +90,23 @@ export default {
       this.multipleSelection = [];
     },
     backRent() {
-      this.selectedRented.forEach((item) => {
-        this.$store.state.rentedStuff.forEach(function(val, index, arr) {
-          if (val.itemsName == item.itemsName) {
-            console.log("i,item :>> ", val, item);
-            val.remindNumber++;
-          }
-          if (item == val) {
-            arr.splice(index, 1);
+      Array.prototype.indexOf = function(val) {
+        for (var i = 0; i < this.length; i++) {
+          if (this[i] == val) return i;
+        }
+        return -1;
+      };
+      Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+          this.splice(index, 1);
+        }
+      };
+      this.selectedRented.forEach((i) => {
+        this.$store.state.rentedStuff.forEach((item) => {
+          if (item.itemsName == i.itemsName) {
+            item.remindNumber++;
+            this.$store.state.rentedStuff.remove(i);
           }
         });
       });
