@@ -1,7 +1,7 @@
 <template>
   <el-drawer
     title="商品"
-    v-model="this.$props.drawer"
+    v-model="v"
     :with-header="false"
     :before-close="handleClose"
     destroy-on-close
@@ -43,7 +43,7 @@ import axios from "axios";
 import { ElMessage } from "element-plus";
 
 export default {
-  props: ["drawer"],
+  props: ["drawer", "costomName"],
   components: {
     dataTable,
   },
@@ -57,21 +57,27 @@ export default {
     axios.get("/api/goods/selectGA").then((res) => {
       this.$store.state.admission = res.data;
     });
+    console.log("1 :>> ", 1);
+    console.log("this.$porps.costomName :>> ", this.$props.costomName);
+  },
+  mounted() {
+    this.getCostomData();
   },
   data() {
     return {
+      v: true,
       Admission: [],
       SaleGoods: [],
       Drinks: [],
       Selection: [],
       height: "150px",
+      costomData: 0,
     };
   },
   computed: {
     boughtGoods() {
-      return this.$store.state.boughtGoods;
+      return this.$store.state.costomData[this.costomData].boughtGoods;
     },
-
     saleGoods() {
       return this.$store.state.saleGoods;
     },
@@ -86,6 +92,14 @@ export default {
     },
   },
   methods: {
+    getCostomData() {
+      let cs = this.$store.state.costomData;
+      for (let i = 0; i < cs.length; i++) {
+        if (cs[i].name == this.$props.costomName) {
+          this.costomData = i;
+        }
+      }
+    },
     changeBuyAdmission(val) {
       this.Admission = val;
     },
@@ -108,8 +122,9 @@ export default {
       this.$confirm("确认购买？")
         .then(() => {
           this.multipleSelection.forEach((item) => {
-            this.$store.state.boughtGoods.push(item);
-            console.log("item :>> ", item.goodsID);
+            this.$store.state.costomData[this.costomData].boughtGoods.push(
+              item
+            );
             axios.put("/api/goods/backID" + item.goodsID);
             axios.get("/api/cashierOrder/selectSale").then((resp) => {
               this.$store.state.saleData = resp.data;

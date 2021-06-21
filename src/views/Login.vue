@@ -65,7 +65,6 @@ export default {
       this.$refs.login.validate((valid) => {
         if (valid) {
           this.$message.success("登录成功");
-          console.log("this.params.username :>> ", this.param.username);
           localStorage.setItem("ms_username", this.param.username);
           this.$router.push("/index");
         } else {

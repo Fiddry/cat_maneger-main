@@ -1,28 +1,30 @@
 <template>
-  <el-card>
-    <el-input
-      placeholder="请输入猫咪信息"
-      v-model="search"
-      class="input-with-select"
-    >
-      <template #append>
-        <el-button @click="tip" icon="el-icon-search"></el-button>
-      </template>
-    </el-input>
+  <div>
+    <el-card>
+      <el-input
+        placeholder="请输入猫咪信息"
+        v-model="search"
+        class="input-with-select"
+      >
+        <template #append>
+          <el-button @click="tip" icon="el-icon-search"></el-button>
+        </template>
+      </el-input>
 
-    <cat-table :tableData="catData"></cat-table>
-  </el-card>
-  <div class="block">
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-sizes="[5, 10, 15, 20]"
-      :page-size="5"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="this.total"
-    >
-    </el-pagination>
+      <cat-table :tableData="catData"></cat-table>
+    </el-card>
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[5, 10, 15, 20]"
+        :page-size="5"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="this.total"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 

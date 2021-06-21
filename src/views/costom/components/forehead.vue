@@ -35,7 +35,6 @@ export default {
       this.$emit("changeVisible");
     },
     changeComedCostom(val) {
-      console.log("val :>> ", val);
       this.multipleSelection = val;
     },
     come() {
@@ -45,7 +44,6 @@ export default {
           this.splice(index, 1);
         }
       };
-      console.log('this. :>> ', this.multipleSelection);
       this.$emit("comeCostom", this.multipleSelection);
       this.multipleSelection.forEach((item) => {
         this.$store.state.foreCostom.remove(item);

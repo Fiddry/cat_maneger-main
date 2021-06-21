@@ -35,7 +35,6 @@ export default {
       this.$emit("closeCatEdit");
     },
     onSubmit() {
-      console.log(this.Data);
       this.close();
     },
   },

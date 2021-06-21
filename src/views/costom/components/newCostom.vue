@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="新增地址" v-model="dialogFormVisible">
+  <el-dialog title="新增地址" v-model="dialogFormVisible" @close="close">
     <el-form :model="form">
       <el-form-item label="客人姓名" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off"></el-input>
@@ -44,14 +44,15 @@ export default {
           ? "0" + new Date().getSeconds()
           : new Date().getSeconds();
       _this.gettime = yy + "/" + mm + "/" + dd + " " + hh + ":" + mf + ":" + ss;
-      console.log("_this.gettime :>> ", _this.gettime);
       return _this.gettime;
     },
   },
   methods: {
     submit() {
       this.form.time = this.time;
-      console.log("this.form :>> ", this.form);
+      this.$emit("closeNew", this.form);
+    },
+    close() {
       this.$emit("closeNew", this.form);
     },
   },

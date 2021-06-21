@@ -4,6 +4,7 @@ export default createStore({
     tagsList: [],
     collapse: false,
     costom: [],
+    costomData: [],
     foreCostom: [],
     Items: ["物品名称", "单价", "剩余数量"],
     catProducts: [],

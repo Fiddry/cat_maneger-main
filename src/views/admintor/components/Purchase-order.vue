@@ -24,7 +24,7 @@ export default {
   created() {
     // console.log("object :>> ", this.$props.orderData);
     this.$props.orderData.forEach((item) => {
-      item.number = 0;
+      item.number = 10;
     });
   },
   data() {
@@ -37,10 +37,7 @@ export default {
   },
   computed: {
     tableData() {
-      this.$props.orderData.forEach((item) => {
-        item.number = 10;
-      });
-      return this.$props.orderData
+      return this.$props.orderData;
     },
   },
   methods: {

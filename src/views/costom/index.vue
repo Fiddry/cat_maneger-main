@@ -16,14 +16,19 @@
       <el-table-column label="已收费用" prop="money"></el-table-column>
       <el-table-column label="操作" align="left">
         <template #default="scope">
-          <el-button @click="this.Buy = true">购买</el-button>
-          <buygoods @changedrawer="changedBuy" :drawer="Buy"></buygoods>
+          <el-button @click="changBuy(scope.row)">购买</el-button>
+
           <el-button @click="this.Rent = true">租借</el-button>
           <rentStuf @changedrawer="changedRent" :drawer="Rent"></rentStuf>
           <el-button @click="delet(scope.row)">离店</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <buygoods
+      @changedrawer="changedBuy"
+      :costomName="this.costomName"
+      v-if="Buy"
+    ></buygoods>
   </div>
 </template>
 
@@ -51,6 +56,7 @@ export default {
       Visible: false,
       Buy: false,
       Rent: false,
+      costomName: "",
     };
   },
   computed: {
@@ -63,6 +69,10 @@ export default {
     changedBuy() {
       this.Buy = false;
     },
+    changBuy(row) {
+      this.Buy = true;
+      this.costomName = row.name;
+    },
     changedRent() {
       this.Rent = false;
     },
@@ -71,6 +81,8 @@ export default {
     },
     comeCostom(rows) {
       rows.forEach((item) => {
+        let c = { name: item.name.name, boughtGoods: [], rentedStuff: [] };
+        this.$store.state.costomData.push(c);
         this.$store.state.costom.push(item);
       });
       this.changeVisible;
@@ -83,9 +95,14 @@ export default {
         .catch(() => {});
     },
     closeNew(val) {
-      this.v1 = false;
-      console.log(val);
-      this.$store.state.costom.push(val)
+      if (val.name) {
+        this.v1 = false;
+        let c = { name: val.name, boughtGoods: [], rentedStuff: [] };
+        this.$store.state.costomData.push(c);
+        this.$store.state.costom.push(val);
+      } else {
+        this.v1 = false;
+      }
     },
   },
 };

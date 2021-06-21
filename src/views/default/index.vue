@@ -15,11 +15,9 @@ export default {
   data() {},
   beforeCreate() {
     axios.get("/api/cashierOrder/selectSale").then((resp) => {
-      console.log("resp.data1 :>> ", resp.data);
       this.$store.state.saleData = resp.data;
     });
   },
- 
 };
 </script>
 

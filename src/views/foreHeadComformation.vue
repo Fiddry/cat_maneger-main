@@ -48,7 +48,6 @@ export default {
   name: "tabs",
   created() {
     axios.get("/api/consumerAppointment/list").then((resp) => {
-      console.log("resp.data :>> ", resp.data);
       this.unComfCostom = resp.data;
     });
   },
