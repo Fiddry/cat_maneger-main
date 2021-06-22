@@ -17,10 +17,8 @@
       <el-table-column label="操作" align="left">
         <template #default="scope">
           <el-button @click="changBuy(scope.row)">购买</el-button>
-
-          <el-button @click="this.Rent = true">租借</el-button>
-          <rentStuf @changedrawer="changedRent" :drawer="Rent"></rentStuf>
-          <el-button @click="delet(scope.row)">离店</el-button>
+          <el-button @click="changRent(scope.row)">租借</el-button>
+          <el-button @click="delet(scope)">离店</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -29,6 +27,11 @@
       :costomName="this.costomName"
       v-if="Buy"
     ></buygoods>
+    <rentStuf
+      @changedrawer="changedRent"
+      :costomName="this.costomName"
+      v-if="Rent"
+    ></rentStuf>
   </div>
 </template>
 
@@ -76,6 +79,10 @@ export default {
     changedRent() {
       this.Rent = false;
     },
+    changRent(row) {
+      this.Rent = true;
+      this.costomName = row.name;
+    },
     changeVisible() {
       this.Visible = false;
     },
@@ -87,10 +94,10 @@ export default {
       });
       this.changeVisible;
     },
-    delet(row) {
+    delet(scope) {
       this.$confirm("确认顾客离店？")
         .then(() => {
-          this.costom.pop(row.$index);
+          this.$store.state.costom.splice(scope.$index, 1);
         })
         .catch(() => {});
     },

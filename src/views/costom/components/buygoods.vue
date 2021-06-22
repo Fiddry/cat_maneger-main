@@ -57,8 +57,6 @@ export default {
     axios.get("/api/goods/selectGA").then((res) => {
       this.$store.state.admission = res.data;
     });
-    console.log("1 :>> ", 1);
-    console.log("this.$porps.costomName :>> ", this.$props.costomName);
   },
   mounted() {
     this.getCostomData();

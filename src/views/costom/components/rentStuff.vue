@@ -1,7 +1,7 @@
 <template>
   <el-drawer
     title="商品"
-    v-model="this.$props.drawer"
+    v-model="v"
     :with-header="false"
     :before-close="handleClose"
     destroy-on-close
@@ -30,20 +30,25 @@ import dataTable from "../../../components/table.vue";
 import { ElMessage } from "element-plus";
 import axios from "axios";
 export default {
-  props: ["drawer"],
+  props: ["costomName"],
   created() {
     axios.get("/api/catToys/selectToys").then((res) => {
       this.$store.state.stuffItems = res.data;
     });
+  },
+  mounted() {
+    this.getCostomData();
   },
   components: {
     dataTable,
   },
   data() {
     return {
+      v: true,
       multipleSelection: [],
       selectedRented: [],
       title: ["itemsName"],
+      costomData: 0,
     };
   },
   computed: {
@@ -51,10 +56,18 @@ export default {
       return this.$store.state.stuffItems;
     },
     rentedStuff() {
-      return this.$store.state.rentedStuff;
+      return this.$store.state.costomData[this.costomData].rentedStuff;
     },
   },
   methods: {
+    getCostomData() {
+      let cs = this.$store.state.costomData;
+      for (let i = 0; i < cs.length; i++) {
+        if (cs[i].name == this.$props.costomName) {
+          this.costomData = i;
+        }
+      }
+    },
     changestuffItems(val) {
       this.multipleSelection = val;
     },
@@ -78,7 +91,9 @@ export default {
                 i.remindNumber--;
               }
             });
-            this.$store.state.rentedStuff.push(item);
+            this.$store.state.costomData[this.costomData].rentedStuff.push(
+              item
+            );
           });
           this.multipleSelection = [];
           // this.$emit("changedrawer");
@@ -102,22 +117,36 @@ export default {
           this.splice(index, 1);
         }
       };
+      Array.prototype.add = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+          this[index].remindNumber++;
+        }
+      };
       this.selectedRented.forEach((i) => {
-        this.$store.state.rentedStuff.forEach((item) => {
-          if (item.itemsName == i.itemsName) {
-            item.remindNumber++;
-            this.$store.state.rentedStuff.remove(i);
+        console.log("i :>> ", i);
+        this.$store.state.costomData[this.costomData].rentedStuff.forEach(
+          (item) => {
+            console.log("itma :>> ", item);
+            if (item.itemsName == i.itemsName) {
+              this.$store.state.costomData[this.costomData].rentedStuff.add(i);
+              this.$store.state.costomData[this.costomData].rentedStuff.remove(
+                i
+              );
+            }
           }
-        });
+        );
       });
     },
     getRid() {
       this.selectedRented.forEach((item) => {
-        this.$store.state.rentedStuff.forEach(function(val, index, arr) {
-          if (item == val) {
-            arr.splice(index, 1);
+        this.$store.state.costomData[this.costomData].rentedStuff.forEach(
+          function(val, index, arr) {
+            if (item == val) {
+              arr.splice(index, 1);
+            }
           }
-        });
+        );
       });
       ElMessage.warning({
         message: "损坏物品已删除",
